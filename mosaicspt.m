@@ -20,7 +20,7 @@ catch
 end
 
 cd(pathname);
-pathname
+
 switch os
     case {'PCWIN64','PCWIN32'}
         mkdir(fullfile(pwd,'temp'));
@@ -28,20 +28,14 @@ switch os
         mkdir(fullfile(pwd,'temp'));
 end
 
-numfiles = length(filelist)
-filelist
+numfiles = length(filelist);
 xypixel = 16/objmag*150/200;
 %%
 for a = 1:numfiles
     %%
-    1:numfiles
-    fullfile(pwd,'temp')
     mkdir(fullfile(pwd,'temp'));
     currfile = filelist{a};
-    filelist{a}
     img = uint16(h5import2(pathname,currfile));
-    pathname
-    currfile
     [~,filepart] = fileparts(currfile);
     timepoints = size(img,4);
     img = reshape(img,size(img,1),size(img,2),size(img,3)*size(img,4));
@@ -66,21 +60,18 @@ for a = 1:numfiles
     if process
         mosaicfile = fullfile(pathname, ['Traj_' filepart '_preprocessed.tif.csv']);
     else
-        %mkdir(pwd,'temp');
+        mkdir(pwd,'temp');
         mosaicfile = fullfile(pwd,'temp','Traj_temp.tif.csv');
     end
     tracks = csv2tracks(mosaicfile,minlength,objmag,d); %#ok<NASGU>
     filesave2 = [filepart '_particletracks.mat'];
     save(fullfile(pathname,filesave2),'tracks');
-%     if ~process
-%         filesave = [filepart '_MOSAICdata.csv'];
-%         movefile(mosaicfile,fullfile(pathname,filesave));
-%         delete(fullfile(pwd,'temp','*'));
-%         %rmdir(fullfile(pwd,'temp'));
-%     end
-     MIJ.run('Close')
-    delete(fullfile(pwd,'temp','*'));
-    disp('closing file')
-   
+    if ~process
+        filesave = [filepart '_MOSAICdata.csv'];
+        movefile(mosaicfile,fullfile(pathname,filesave));
+        delete(fullfile(pwd,'temp','*'));
+        %rmdir(fullfile(pwd,'temp'));
+    end
+    MIJ.run('Close')
 end
 
