@@ -41,6 +41,7 @@ for a = 1:numfiles
     img = reshape(img,size(img,1),size(img,2),size(img,3)*size(img,4));
     disp('Exporting to FIJI...')
     MIJ.createImage(img);
+    MIJ.run('Collect Garbage'); % Reduce unnecessary RAM usage
     txt = ['order=xyczt(default) channels=1 slices=9 frames=' num2str(timepoints) ' display=Grayscale'];
     MIJ.run('Stack to Hyperstack...',txt);
     txt3 =  ['channels=1 slices=9 frames=' num2str(timepoints) ' unit=micrometer pixel_width=' num2str(xypixel) ' pixel_height=' num2str(xypixel) ' voxel_depth=' num2str(d/1000)];
@@ -67,7 +68,7 @@ for a = 1:numfiles
     filesave2 = [filepart '_particletracks.mat'];
     save(fullfile(pathname,filesave2),'tracks');
     if ~process
-        filesave = [filepart '_MOSAICdata.csv'];
+        filesave = [filepart '_MOSAICdata.txt'];
         movefile(mosaicfile,fullfile(pathname,filesave));
         delete(fullfile(pwd,'temp','*'));
         %rmdir(fullfile(pwd,'temp'));
