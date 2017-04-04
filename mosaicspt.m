@@ -62,7 +62,7 @@ for a = 1:numfiles
         mosaicfile = fullfile(pathname, ['Traj_' filepart '_preprocessed.tif.csv']);
     else
         mkdir(pwd,'temp');
-        mosaicfile = fullfile(pwd,'temp','Traj_temp.tif.csv');
+        mosaicfile = fullfile(pwd,'temp','Traj_temp.tif.txt');
     end
     tracks = csv2tracks(mosaicfile,minlength,objmag,d); %#ok<NASGU>
     filesave2 = [filepart '_particletracks.mat'];
@@ -74,5 +74,7 @@ for a = 1:numfiles
         %rmdir(fullfile(pwd,'temp'));
     end
     MIJ.run('Close')
+    delete(fullfile(pwd,'temp','*'));
+    disp('closing fiji')
 end
-
+end
