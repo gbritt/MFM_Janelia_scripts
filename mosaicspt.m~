@@ -68,7 +68,7 @@ for a = 1:numfiles
     tracks = csv2tracks(mosaicfile,minlength,objmag,d) %#ok<NASGU>
     filesave2 = [filepart '_particletracks.mat']
     save(fullfile(pathname,filesave2),'tracks') % hanging up here, why
-    if process
+    if ~process
         filesave = [filepart '_MOSAICdata.csv'];
         movefile(mosaicfile,fullfile(pathname,filesave));
         delete(fullfile(pwd,'temp','*'));
