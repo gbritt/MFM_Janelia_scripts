@@ -52,7 +52,8 @@ for a = 1:numfiles
         MIJ.run('Save',['save=[' fullfile(pathname,[filepart '_preprocessed.tif']) ']']);
     else
         txt1 = ['save=[' fullfile(pwd,'temp','temp.tif') ']'];
-        MIJ.run('Save',txt1);        
+        MIJ.run('Save',txt1);
+       
     end 
     disp('Performing Mosaic 3D SPT...')
     txt2 = ['radius=' radius ' cutoff=' score ' per/abs=' thresh ' link=' link ' displacement=' displace ' dynamics=Brownian'];
@@ -68,6 +69,8 @@ for a = 1:numfiles
     tracks = csv2tracks(mosaicfile,minlength,objmag,d) %#ok<NASGU>
     filesave2 = [filepart '_particletracks.mat']
     save(fullfile(pathname,filesave2),'tracks') % hanging up here, why
+    tracks
+    filesave = [filepart '_MOSAICdata.csv'];
     if process
         filesave = [filepart '_MOSAICdata.csv'];
         movefile(mosaicfile,fullfile(pathname,filesave));
@@ -76,7 +79,6 @@ for a = 1:numfiles
     end
     disp('Mijclose')
     MIJ.run('Close')
-    MIJ.exit
     delete(fullfile(pwd,'temp','*'));
     disp('closing fiji')
 end
