@@ -53,6 +53,7 @@ for a = 1:numfiles
     else
         txt1 = ['save=[' fullfile(pwd,'temp','temp.tif') ']'];
         MIJ.run('Save',txt1);
+        
        
     end 
     disp('Performing Mosaic 3D SPT...')
@@ -67,6 +68,9 @@ for a = 1:numfiles
         
     end
     tracks = csv2tracks(mosaicfile,minlength,objmag,d) %#ok<NASGU>
+    tracks2save = csvread(mosaicfile,1,0)
+    csvwrite([filepart '_MosaicTracks.txt'],tracks2save)
+    
     filesave2 = [filepart '_particletracks.mat']
     save(fullfile(pathname,filesave2),'tracks') % hanging up here, why
     tracks
